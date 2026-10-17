@@ -47,7 +47,7 @@ func recibir_dano(cantidad: int = 1) -> void:
 	iniciar_efecto_parpadeo()
 
 func morir() -> void:
-	print("¡Billy ha muerto!")
+	print("¡Billy ha muerto! Reiniciando...")
 	get_tree().reload_current_scene()
 
 # --- NUEVAS FUNCIONES PARA EL EFECTO ---
