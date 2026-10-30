@@ -6,7 +6,7 @@ func _ready() -> void:
 
 func iniciar_temporizador_partida() -> void:
 	# Espera 30 segundos exactos sin congelar el juego
-	await get_tree().create_timer(60.0).timeout
+	await get_tree().create_timer(9990).timeout
 	
 	# Llamamos directamente a tu función morir() para acabar la partida
 	morir()
