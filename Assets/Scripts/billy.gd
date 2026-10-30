@@ -1,13 +1,29 @@
 extends CharacterBody2D
 
+func _ready() -> void:
+	# Iniciamos la cuenta regresiva de 30 segundos al arrancar la partida
+	iniciar_temporizador_partida()
+
+func iniciar_temporizador_partida() -> void:
+	# Espera 30 segundos exactos sin congelar el juego
+	await get_tree().create_timer(30.0).timeout
+	
+	# Llamamos directamente a tu función morir() para acabar la partida
+	morir()
+
+
 var Vidas: int = 3
 var esta_parpadeando: bool = false
 const TIEMPO_INVENCIBILIDAD = 1.0
+var muerto :bool = false
 
-const SPEED = 150.0
+var SPEED = 150.0
 const JUMP_VELOCITY = -380.0
 
 func _physics_process(delta: float) -> void:
+	if muerto:
+		return
+	
 	var direction := Input.get_axis("ui_left", "ui_right")
 
 	if not is_on_floor():
@@ -16,6 +32,7 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("ui_up") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		$AudioSaltar.play()
 
 	if direction:
 		velocity.x = direction * SPEED
@@ -26,40 +43,49 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		if direction:
 			$Animaciones.play("Walking")
+			if not $AudioCaminar.playing:
+				$AudioCaminar.play()
 		else:
 			$Animaciones.play("Idle")
 
 	move_and_slide()
 
-# --- FUNCIÓN PARA RECIBIR DAÑO MODIFICADA ---
+# --- FUNCIÓN PARA RECIBIR DAÑO ---
 func recibir_dano(cantidad: int = 1) -> void:
-	# 1. Si Billy ya es invencible (está parpadeando), ignoramos el daño
 	if esta_parpadeando: return
 
 	Vidas -= cantidad
 	print("Vidas de Billy: ", Vidas)
+	if not $"AudioDaño".playing:
+		$"AudioDaño".play()
 	
 	if Vidas <= 0:
 		morir()
-		return # Salimos rápido si muere para no parpadear
-
-	# 2. Si sobrevive, activamos el parpadeo e invencibilidad
+		return
 	iniciar_efecto_parpadeo()
 
 func morir() -> void:
+	if Global.monedas_actuales > Global.record_monedas:
+		Global.record_monedas = Global.monedas_actuales
+		print("¡Nuevo récord guardado: ", Global.record_monedas)
+	Global.monedas_actuales = 0
+	muerto = true
+	if not $AudioMuerte/Muerte2.playing:
+		$AudioMuerte/Muerte2.play()
+	if not $AudioMuerte.playing:
+		$AudioMuerte.play()
+	$Animaciones.play("Death")
+
 	print("¡Billy ha muerto! Reiniciando...")
+	await get_tree().create_timer(2.48).timeout
 	get_tree().reload_current_scene()
 
-# --- NUEVAS FUNCIONES PARA EL EFECTO ---
+# --- Funcion de Invencibilidad ---
 func iniciar_efecto_parpadeo() -> void:
 	esta_parpadeando = true
 	
-	# Creamos un Tween (secuencia de animación por código)
-	# 'create_tween()' es el método moderno en Godot 4
 	var tween = create_tween()
 	
-	# Haremos 4 ciclos rápidos de parpadeo (apagar/encender alpha)
-	# Esto dura aprox: 4 ciclos * (0.1s apagado + 0.1s encendido) = 0.8s
 	for i in range(4):
 		# Cambia 'modulate:a' (alpha/transparencia) del sprite a 0.2 (casi transparente) en 0.1s
 		tween.tween_property($Animaciones, "modulate:a", 0.2, 0.1)

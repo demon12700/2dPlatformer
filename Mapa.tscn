@@ -3,10 +3,25 @@
 [ext_resource type="Texture2D" uid="uid://b1fyqsoxorxn3" path="res://Assets/Textures/Characters/tilemap-characters.png" id="1_lbiw5"]
 [ext_resource type="Script" uid="uid://nkpd4lira32" path="res://Assets/Scripts/billy.gd" id="1_qgw4m"]
 [ext_resource type="Shader" uid="uid://b0ogf2y6oij0e" path="res://Assets/Shaders/Plantas.gdshader" id="2_spsvo"]
+[ext_resource type="Script" uid="uid://dlgnkyf8xcde8" path="res://agua_animacion.gd" id="3_3p3ty"]
 [ext_resource type="Texture2D" uid="uid://bbef17dl0c2nr" path="res://Assets/Textures/Map/tilemap.png" id="3_622qf"]
+[ext_resource type="Texture2D" uid="uid://rupvwhlud6l4" path="res://Assets/Textures/Characters/Billy/tile_death0000.png" id="4_6ngjn"]
 [ext_resource type="Script" uid="uid://0m2wf0120h1y" path="res://Assets/Scripts/vision_jugador.gd" id="4_rml5n"]
+[ext_resource type="Script" uid="uid://dfho1qjp13nqh" path="res://agua_animacion_2.gd" id="4_rs28o"]
+[ext_resource type="Texture2D" uid="uid://diobpmqfyrbwe" path="res://Assets/Textures/Characters/Billy/tile_death0001.png" id="5_e0oac"]
 [ext_resource type="Script" uid="uid://dosjuh2h544t7" path="res://Assets/Scripts/moneda_ui.gd" id="5_udyo2"]
+[ext_resource type="Texture2D" uid="uid://by8ox0460takc" path="res://Assets/Textures/Characters/Billy/tile_death0002.png" id="6_h3gpq"]
+[ext_resource type="Texture2D" uid="uid://bu46jqnn4bkes" path="res://Assets/Textures/Characters/Billy/tile_death0003.png" id="7_3p3ty"]
 [ext_resource type="Script" uid="uid://vxh1if6x3ekt" path="res://Assets/Scripts/badis.gd" id="7_a5oks"]
+[ext_resource type="AudioStream" uid="uid://w87gce8h8d0e" path="res://Assets/Audio/Characters/Billy/Caminar.wav" id="7_ifyfn"]
+[ext_resource type="AudioStream" uid="uid://clha7qxubikvx" path="res://Assets/Audio/Characters/Billy/Saltar.wav" id="8_exdis"]
+[ext_resource type="Texture2D" uid="uid://caw6xh72o31av" path="res://Assets/Textures/Characters/Billy/tile_death0004.png" id="8_rs28o"]
+[ext_resource type="AudioStream" uid="uid://dgq6hnf3ueit4" path="res://Assets/Audio/Characters/Billy/Daño.wav" id="9_7cr2c"]
+[ext_resource type="Texture2D" uid="uid://cd3s8iindh3ti" path="res://Assets/Textures/Characters/Billy/tile_death0005.png" id="9_l1b16"]
+[ext_resource type="Texture2D" uid="uid://bsaivqn46q63n" path="res://Assets/Textures/Characters/Billy/tile_death0006.png" id="10_1s7my"]
+[ext_resource type="AudioStream" uid="uid://dvheypjkos1g" path="res://Assets/Audio/Characters/Billy/Muerte.wav" id="10_mcjhm"]
+[ext_resource type="AudioStream" uid="uid://dy6qvv1thfdyp" path="res://Assets/Audio/Characters/Billy/Muerte2.wav" id="18_e0oac"]
+[ext_resource type="Script" uid="uid://ci5k62crbb0m8" path="res://spawn_monedas.gd" id="20_rs28o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_622qf"]
 texture = ExtResource("3_622qf")
@@ -264,6 +279,28 @@ shader_parameter/velocidad = 2.0
 shader_parameter/fuerza = 8.00000038
 shader_parameter/frecuencia = 2.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_rs28o"]
+atlas = ExtResource("3_622qf")
+region = Rect2(247, 38, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1b16"]
+atlas = ExtResource("3_622qf")
+region = Rect2(247, 19, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bekt7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rs28o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1b16")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qgw4m"]
 atlas = ExtResource("1_lbiw5")
 region = Rect2(1, 0, 24, 24)
@@ -278,6 +315,32 @@ region = Rect2(1, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vlew8"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6ngjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_e0oac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_h3gpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3p3ty")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rs28o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_l1b16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1s7my")
+}],
+"loop": 0,
+"name": &"Death",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qgw4m")
@@ -433,28 +496,6 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_vtne6"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": null
-}],
-"loop": 1,
-"name": &"Attack",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": null
-}],
-"loop": 1,
-"name": &"Idle",
-"speed": 5.0
-}]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ifyfn"]
 atlas = ExtResource("1_lbiw5")
 region = Rect2(75, 50, 24, 24)
@@ -493,10 +534,10 @@ size = Vector2(27, 18)
 
 [node name="Node2D" type="Node2D" unique_id=1624428051]
 texture_filter = 1
-position = Vector2(514, 294)
+position = Vector2(891, 242)
 
 [node name="Base" type="TileMapLayer" parent="." unique_id=1988533979]
-tile_map_data = PackedByteArray("AADh/xIAAAACAAEAAADi/xIAAAACAAEAAADj/xIAAAACAAEAAADk/xIAAAACAAEAAADl/xIAAAACAAEAAADm/xIAAAACAAEAAADn/xIAAAACAAEAAADo/xIAAAACAAEAAADp/xIAAAACAAEAAADq/xIAAAACAAEAAADr/xIAAAACAAEAAADs/xIAAAACAAEAAADt/xIAAAACAAEAAADu/xIAAAACAAEAAADv/xIAAAACAAEAAADw/xIAAAACAAEAAADx/xIAAAACAAEAAADh/xMAAAACAAYAAADj/xMAAAACAAYAAADl/xMAAAACAAYAAADn/xMAAAACAAYAAADp/xMAAAACAAYAAADr/xMAAAACAAYAAADt/xMAAAACAAYAAADv/xMAAAACAAYAAADx/xMAAAACAAYAAADz/xMAAAACAAYAAAD1/xMAAAACAAYAAAD3/xMAAAACAAYAAADi/xMAAAACAAYAAADk/xMAAAACAAYAAADm/xMAAAACAAYAAADo/xMAAAACAAYAAADq/xMAAAACAAYAAADs/xMAAAACAAYAAADu/xMAAAACAAYAAADw/xMAAAACAAYAAADy/xMAAAACAAYAAAD0/xMAAAACAAYAAAD2/xMAAAACAAYAAADg/xIAAAACAAEAAADg/xMAAAACAAYAAADg/xQAAAACAAYAAADh/xQAAAACAAYAAADi/xQAAAACAAYAAADj/xQAAAACAAYAAADk/xQAAAACAAYAAADn/xQAAAACAAYAAADo/xQAAAACAAYAAADp/xQAAAACAAYAAADq/xQAAAACAAYAAADr/xQAAAACAAYAAADs/xQAAAACAAYAAADt/xQAAAACAAYAAADu/xQAAAACAAYAAADv/xQAAAACAAYAAADw/xQAAAACAAYAAADx/xQAAAACAAYAAADy/xQAAAACAAYAAADz/xQAAAACAAYAAAD0/xQAAAACAAYAAAD1/xQAAAACAAYAAAD2/xQAAAACAAYAAAD3/xQAAAACAAYAAADl/xQAAAACAAYAAADm/xQAAAACAAYAAADj/w8AAAABAAAAAADk/w8AAAACAAAAAADl/w8AAAACAAAAAADm/w8AAAACAAAAAADn/w8AAAADAAAAAADs/wwAAAACAAAAAADt/wwAAAACAAAAAADr/wwAAAABAAAAAADu/wwAAAADAAAAAAD0/xEAAAACAAEAAADz/xIAAAACAAYAAAD0/xIAAAACAAYAAADy/xIAAAACAAEAAAD1/xEAAAACAAEAAAD2/xEAAAACAAEAAAD3/xEAAAACAAEAAAD1/xIAAAAEAAAAAAD2/xIAAAAEAAAAAAD3/xIAAAAEAAAAAADg/xUAAAAEAAEAAADh/xUAAAAEAAEAAADi/xUAAAAEAAEAAADj/xUAAAAEAAEAAADk/xUAAAAEAAEAAADl/xUAAAAEAAEAAADm/xUAAAAEAAEAAADn/xUAAAAEAAEAAADo/xUAAAAEAAEAAADp/xUAAAAEAAEAAADq/xUAAAAEAAEAAADr/xUAAAAEAAEAAADs/xUAAAAEAAEAAADt/xUAAAAEAAEAAADu/xUAAAAEAAEAAADv/xUAAAAEAAEAAADw/xUAAAAEAAEAAADx/xUAAAAEAAEAAADy/xUAAAAEAAEAAADz/xUAAAAEAAEAAAD0/xUAAAAEAAEAAAD1/xUAAAAEAAEAAAD2/xUAAAAEAAEAAAD3/xUAAAAEAAEAAAD8/xEAAAACAAAAAAD9/xEAAAACAAAAAAD+/xEAAAACAAAAAAD//xEAAAACAAAAAAAAABEAAAACAAAAAAABABEAAAACAAAAAAD8/xIAAAACAAYAAAD8/xMAAAACAAYAAAD8/xQAAAACAAYAAAD8/xUAAAACAAYAAAD9/xUAAAACAAYAAAD+/xUAAAACAAYAAAD//xUAAAACAAYAAAAAABUAAAACAAYAAAABABUAAAACAAYAAAABABQAAAACAAYAAAABABMAAAACAAYAAAABABIAAAACAAYAAAAAABIAAAACAAYAAAD//xIAAAACAAYAAAD+/xIAAAACAAYAAAD9/xIAAAACAAYAAAD9/xMAAAACAAYAAAD9/xQAAAACAAYAAAD+/xQAAAACAAYAAAD//xQAAAACAAYAAAAAABQAAAACAAYAAAAAABMAAAACAAYAAAD//xMAAAACAAYAAAD+/xMAAAACAAYAAAD4/xEAAAACAAEAAAD7/xEAAAACAAEAAAD7/xUAAAACAAYAAAD7/xQAAAACAAYAAAD7/xMAAAACAAYAAAD7/xIAAAACAAYAAAD4/xUAAAACAAYAAAD4/xQAAAACAAYAAAD4/xMAAAACAAYAAAD4/xIAAAACAAYAAADz/xEAAAACAAAAAAA=")
+tile_map_data = PackedByteArray("AADh/xIAAAACAAEAAADi/xIAAAACAAEAAADj/xIAAAACAAEAAADk/xIAAAACAAEAAADl/xIAAAACAAEAAADm/xIAAAACAAEAAADn/xIAAAACAAEAAADo/xIAAAACAAEAAADp/xIAAAACAAEAAADq/xIAAAACAAEAAADr/xIAAAACAAEAAADs/xIAAAACAAEAAADt/xIAAAACAAEAAADu/xIAAAACAAEAAADv/xIAAAACAAEAAADw/xIAAAACAAEAAADx/xIAAAACAAEAAADh/xMAAAACAAYAAADj/xMAAAACAAYAAADl/xMAAAACAAYAAADn/xMAAAACAAYAAADp/xMAAAACAAYAAADr/xMAAAACAAYAAADt/xMAAAACAAYAAADv/xMAAAACAAYAAADx/xMAAAACAAYAAADz/xMAAAACAAYAAAD1/xMAAAACAAYAAAD3/xMAAAACAAYAAADi/xMAAAACAAYAAADk/xMAAAACAAYAAADm/xMAAAACAAYAAADo/xMAAAACAAYAAADq/xMAAAACAAYAAADs/xMAAAACAAYAAADu/xMAAAACAAYAAADw/xMAAAACAAYAAADy/xMAAAACAAYAAAD0/xMAAAACAAYAAAD2/xMAAAACAAYAAADg/xIAAAACAAEAAADg/xMAAAACAAYAAADg/xQAAAACAAYAAADh/xQAAAACAAYAAADi/xQAAAACAAYAAADj/xQAAAACAAYAAADk/xQAAAACAAYAAADn/xQAAAACAAYAAADo/xQAAAACAAYAAADp/xQAAAACAAYAAADq/xQAAAACAAYAAADr/xQAAAACAAYAAADs/xQAAAACAAYAAADt/xQAAAACAAYAAADu/xQAAAACAAYAAADv/xQAAAACAAYAAADw/xQAAAACAAYAAADx/xQAAAACAAYAAADy/xQAAAACAAYAAADz/xQAAAACAAYAAAD0/xQAAAACAAYAAAD1/xQAAAACAAYAAAD2/xQAAAACAAYAAAD3/xQAAAACAAYAAADl/xQAAAACAAYAAADm/xQAAAACAAYAAADj/w8AAAABAAAAAADk/w8AAAACAAAAAADl/w8AAAACAAAAAADm/w8AAAACAAAAAADn/w8AAAADAAAAAADs/wwAAAACAAAAAADt/wwAAAACAAAAAADr/wwAAAABAAAAAADu/wwAAAADAAAAAAD0/xEAAAACAAEAAADz/xIAAAACAAYAAAD0/xIAAAACAAYAAADy/xIAAAACAAEAAAD1/xEAAAACAAEAAAD2/xEAAAACAAEAAAD3/xEAAAACAAEAAAD1/xIAAAAEAAAAAAD2/xIAAAAEAAAAAAD3/xIAAAAEAAAAAADg/xUAAAAEAAEAAADh/xUAAAAEAAEAAADi/xUAAAAEAAEAAADj/xUAAAAEAAEAAADk/xUAAAAEAAEAAADl/xUAAAAEAAEAAADm/xUAAAAEAAEAAADn/xUAAAAEAAEAAADo/xUAAAAEAAEAAADp/xUAAAAEAAEAAADq/xUAAAAEAAEAAADr/xUAAAAEAAEAAADs/xUAAAAEAAEAAADt/xUAAAAEAAEAAADu/xUAAAAEAAEAAADv/xUAAAAEAAEAAADw/xUAAAAEAAEAAADx/xUAAAAEAAEAAADy/xUAAAAEAAEAAADz/xUAAAAEAAEAAAD0/xUAAAAEAAEAAAD1/xUAAAAEAAEAAAD2/xUAAAAEAAEAAAD3/xUAAAAEAAEAAAD8/xEAAAACAAAAAAD9/xEAAAACAAAAAAD+/xEAAAACAAAAAAD//xEAAAACAAAAAAAAABEAAAACAAAAAAABABEAAAACAAAAAAD8/xIAAAACAAYAAAD8/xMAAAACAAYAAAD8/xQAAAACAAYAAAD8/xUAAAACAAYAAAD9/xUAAAACAAYAAAD+/xUAAAACAAYAAAD//xUAAAACAAYAAAAAABUAAAACAAYAAAABABUAAAACAAYAAAABABQAAAACAAYAAAABABMAAAACAAYAAAABABIAAAACAAYAAAAAABIAAAACAAYAAAD//xIAAAACAAYAAAD+/xIAAAACAAYAAAD9/xIAAAACAAYAAAD9/xMAAAACAAYAAAD9/xQAAAACAAYAAAD+/xQAAAACAAYAAAD//xQAAAACAAYAAAAAABQAAAACAAYAAAAAABMAAAACAAYAAAD//xMAAAACAAYAAAD+/xMAAAACAAYAAAD4/xEAAAACAAEAAAD7/xEAAAACAAEAAAD7/xUAAAACAAYAAAD7/xQAAAACAAYAAAD7/xMAAAACAAYAAAD7/xIAAAACAAYAAAD4/xUAAAACAAYAAAD4/xQAAAACAAYAAAD4/xMAAAACAAYAAAD4/xIAAAACAAYAAADz/xEAAAACAAAAAADf/xEAAAACAAAAAADf/xIAAAACAAYAAADf/xMAAAACAAYAAADf/xQAAAACAAYAAADf/xUAAAACAAYAAAACABEAAAACAAYAAAACABAAAAACAAAAAAACABIAAAAFAAEAAAACABMAAAAFAAEAAAACABQAAAAFAAEAAAACABUAAAAFAAEAAAA=")
 tile_set = SubResource("TileSet_bekt7")
 
 [node name="Plantas" type="TileMapLayer" parent="Base" unique_id=1389165252]
@@ -510,7 +551,7 @@ tile_set = SubResource("TileSet_bekt7")
 modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
 texture_filter = 1
-position = Vector2(0, 1.5)
+position = Vector2(10, 3)
 tile_map_data = PackedByteArray("AADv/xEAAAARAAYAAADi/xEAAAARAAYAAADi/w8AAAARAAQAAADi/w4AAAASAAEAAADh/w0AAAARAAAAAADj/w0AAAATAAAAAADi/w0AAAASAAAAAADj/w4AAAATAAEAAADh/w4AAAARAAEAAADh/w8AAAARAAIAAADv/xAAAAAQAAUAAADv/w8AAAARAAQAAADw/w8AAAATAAIAAADu/w8AAAARAAIAAADu/w4AAAARAAEAAADv/w0AAAASAAAAAADw/w0AAAATAAAAAADw/w4AAAATAAEAAADv/w4AAAASAAEAAADi/xAAAAAQAAUAAADp/xEAAAARAAYAAADp/xAAAAARAAQAAADo/xAAAAARAAIAAADq/xAAAAATAAIAAADp/w8AAAASAAEAAADo/w8AAAARAAEAAADq/w8AAAATAAEAAADq/w4AAAATAAAAAADo/w4AAAARAAAAAADp/w4AAAASAAAAAADu/w0AAAARAAAAAADj/w8AAAATAAIAAAA=")
 tile_set = SubResource("TileSet_bekt7")
 
@@ -519,6 +560,19 @@ show_behind_parent = true
 texture_filter = 1
 tile_map_data = PackedByteArray("AAD5/xIAAAANAAMAAAD6/xIAAAANAAMAAAD6/xMAAAANAAMAAAD5/xMAAAANAAMAAAD5/xQAAAANAAMAAAD5/xUAAAANAAMAAAD6/xUAAAANAAMAAAD6/xQAAAANAAMAAAA=")
 tile_set = SubResource("TileSet_bekt7")
+
+[node name="AguaAnimacion" type="AnimatedSprite2D" parent="Base/Agua" unique_id=1220767163]
+position = Vector2(-103, 279)
+sprite_frames = SubResource("SpriteFrames_bekt7")
+frame_progress = 0.30458006
+script = ExtResource("3_3p3ty")
+
+[node name="AguaAnimacion2" type="AnimatedSprite2D" parent="Base/Agua" unique_id=704265182]
+position = Vector2(-85, 279)
+sprite_frames = SubResource("SpriteFrames_bekt7")
+frame = 1
+frame_progress = 0.96863747
+script = ExtResource("4_rs28o")
 
 [node name="Billy" type="CharacterBody2D" parent="." unique_id=1016557587 groups=["Jugador"]]
 texture_filter = 1
@@ -529,8 +583,9 @@ script = ExtResource("1_qgw4m")
 [node name="Animaciones" type="AnimatedSprite2D" parent="Billy" unique_id=1596566128]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_vlew8")
-animation = &"Idle"
-frame_progress = 0.5870265
+animation = &"Death"
+frame = 6
+frame_progress = 1.0
 
 [node name="Objeto colision" type="CollisionShape2D" parent="Billy" unique_id=1657748666]
 position = Vector2(-0.5, 0)
@@ -549,13 +604,13 @@ scale = Vector2(1.3896987, 1.5413576)
 tile_map_data = PackedByteArray("AAABAAEAAQAEAAYAAAADAAEAAQAFAAYAAAAFAAEAAQAGAAYAAAA=")
 tile_set = SubResource("TileSet_a5oks")
 
-[node name="Label" type="Label" parent="Billy/Vision Jugador/CanvasLayer/UI-Constant" unique_id=1342626066]
+[node name="Label" type="Label" parent="Billy/Vision Jugador/CanvasLayer/UI-Constant" unique_id=1342626066 groups=["PuntuacionMonedas"]]
 offset_left = 36.6986
 offset_top = 14.921909
 offset_right = 90.69859
 offset_bottom = 37.92191
 scale = Vector2(1.065027, 0.79326135)
-text = "Hola"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -568,32 +623,46 @@ sprite_frames = SubResource("SpriteFrames_q1ap8")
 frame_progress = 0.009779354
 script = ExtResource("5_udyo2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Billy" unique_id=140283324]
+[node name="AudioCaminar" type="AudioStreamPlayer2D" parent="Billy" unique_id=1175371629]
+stream = ExtResource("7_ifyfn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Billy/CollisionShape2D" unique_id=1308654522]
-position = Vector2(-28, 2)
-sprite_frames = SubResource("SpriteFrames_vtne6")
-animation = &"Attack"
-autoplay = "Idle"
+[node name="AudioSaltar" type="AudioStreamPlayer2D" parent="Billy" unique_id=1922161688]
+stream = ExtResource("8_exdis")
+
+[node name="AudioDaño" type="AudioStreamPlayer2D" parent="Billy" unique_id=312094192]
+stream = ExtResource("9_7cr2c")
+
+[node name="AudioMuerte" type="AudioStreamPlayer2D" parent="Billy" unique_id=184678288]
+position = Vector2(314, -264)
+stream = ExtResource("10_mcjhm")
+
+[node name="Muerte2" type="AudioStreamPlayer2D" parent="Billy/AudioMuerte" unique_id=1092958619]
+position = Vector2(-313, 264)
+stream = ExtResource("18_e0oac")
 
 [node name="Badis" type="CharacterBody2D" parent="." unique_id=1153029525 groups=["Enemigos"]]
+position = Vector2(-429, 231)
 script = ExtResource("7_a5oks")
 
 [node name="Animaciones" type="AnimatedSprite2D" parent="Badis" unique_id=1544917640]
-position = Vector2(-424, 227)
+position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ufq4m")
 animation = &"Walking"
 frame_progress = 0.7423793
 
 [node name="Colision" type="CollisionShape2D" parent="Badis" unique_id=1721162437]
-position = Vector2(-423.5, 227.5)
+position = Vector2(0.5, -0.5)
 shape = SubResource("RectangleShape2D_q1ap8")
 
 [node name="Hitbox" type="Area2D" parent="Badis" unique_id=1684182394]
-position = Vector2(-424, 227)
+position = Vector2(0, -1)
 
 [node name="Hitbox_Area" type="CollisionShape2D" parent="Badis/Hitbox" unique_id=2020302414]
 position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_a5oks")
+
+[node name="Spawn_Monedas" type="Area2D" parent="." unique_id=831348962]
+position = Vector2(-518, -56)
+script = ExtResource("20_rs28o")
 
 [connection signal="body_entered" from="Badis/Hitbox" to="Badis" method="_on_hitbox_body_entered"]
