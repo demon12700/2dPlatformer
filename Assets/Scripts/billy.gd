@@ -6,7 +6,7 @@ func _ready() -> void:
 
 func iniciar_temporizador_partida() -> void:
 	# Espera 30 segundos exactos sin congelar el juego
-	await get_tree().create_timer(30.0).timeout
+	await get_tree().create_timer(60.0).timeout
 	
 	# Llamamos directamente a tu función morir() para acabar la partida
 	morir()
@@ -17,18 +17,25 @@ var esta_parpadeando: bool = false
 const TIEMPO_INVENCIBILIDAD = 1.0
 var muerto :bool = false
 
+
 var SPEED = 150.0
 const JUMP_VELOCITY = -380.0
+var doblesalto = 1
 
 func _physics_process(delta: float) -> void:
 	if muerto:
 		return
 	
 	var direction := Input.get_axis("ui_left", "ui_right")
+	
+	if not is_on_floor() and Input.is_action_just_pressed("ui_up") and doblesalto > 0:
+		velocity.y = JUMP_VELOCITY
+		doblesalto -= 1
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		$Animaciones.play("Jump")
+
 
 	if Input.is_action_just_pressed("ui_up") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -41,6 +48,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	if is_on_floor():
+		doblesalto = 1
 		if direction:
 			$Animaciones.play("Walking")
 			if not $AudioCaminar.playing:
